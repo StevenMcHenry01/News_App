@@ -1,0 +1,32 @@
+enum Permission {
+  ADMIN
+  USER
+  PERMISSIONUPDATE
+}
+
+type User {
+  id: ID! @unique
+  name: String!
+  email: String! @unique
+  password: String!
+  lib: Int! @default(value: "0")
+  cons: Int! @default(value: "0")
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: [Permission]
+}
+
+type Articles {
+  article: [Article]
+}
+
+type Article {
+  source: String
+  author: String
+  title: String
+  description: String
+  url: String
+  urlToImage: String
+  publishedAt: String
+  content: String
+}
