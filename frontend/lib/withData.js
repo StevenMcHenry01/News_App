@@ -14,6 +14,11 @@ function createClient({ headers }) {
         headers,
       })
     },
+    // local data
+    clientState: {
+      resolvers: {},
+      defaults: {},
+    },
   })
 }
 

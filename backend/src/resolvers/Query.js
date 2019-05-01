@@ -1,5 +1,6 @@
 const { forwardTo } = require('prisma-binding')
 const fetch = require('node-fetch')
+const { rightDomains, leftDomains, centerDomains } = require('../utils')
 
 const Query = {
   //example of using already creating query in prisma
@@ -16,9 +17,35 @@ const Query = {
       info
     )
   },
-  async getArticles(parent, { term }, ctx, info) {
+  async getLeftArticles(parent, { term, page }, ctx, info) {
+    console.log(leftDomains)
+    console.log(rightDomains)
     const response = await fetch(
-      `https://newsapi.org/v2/everything?q=${term}&apiKey=a76f13b0fea54c40983c0b2982f032dd`
+      `https://newsapi.org/v2/everything?q=${term}&page=${page}&language=en&sortBy=popularity&domains=${leftDomains}&apiKey=a76f13b0fea54c40983c0b2982f032dd`
+    )
+    let data = await response.json()
+    data = data.articles
+    // allows for a nice query due to nested results
+    for (let key in data) {
+      data[key].source = data[key].source.name
+    }
+    return data
+  },
+  async getRightArticles(parent, { term, page }, ctx, info) {
+    const response = await fetch(
+      `https://newsapi.org/v2/everything?q=${term}&page=${page}&language=en&sortBy=popularity&domains=${rightDomains}&apiKey=a76f13b0fea54c40983c0b2982f032dd`
+    )
+    let data = await response.json()
+    data = data.articles
+    // allows for a nice query due to nested results
+    for (let key in data) {
+      data[key].source = data[key].source.name
+    }
+    return data
+  },
+  async getCenterArticles(parent, { term, page }, ctx, info) {
+    const response = await fetch(
+      `https://newsapi.org/v2/everything?q=${term}&page=${page}&language=en&sortBy=popularity&domains=${centerDomains}&apiKey=a76f13b0fea54c40983c0b2982f032dd`
     )
     let data = await response.json()
     data = data.articles

@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import FeedStyles from './FeedSyles'
 import User from '../User/User'
 import StyledForm from '../Global_Styles/Form'
+import FeedSearch from './FeedSearch'
 
 export default class Feed extends Component {
   state = {
@@ -21,26 +22,7 @@ export default class Feed extends Component {
             <FeedStyles>
               {me && (
                 <>
-                  <StyledForm
-                    method="post"
-                    onSubmit={async e => {
-                      e.preventDefault()
-                    }}
-                  >
-                    <fieldset disabled={loading} aria-busy={loading}>
-                      <h2>Search</h2>
-                      <label htmlFor="search">
-                        <input
-                          name="search"
-                          type="text"
-                          placeholder="Event"
-                          value={this.state.search}
-                          onChange={this.saveToState}
-                        />
-                      </label>
-                      <button type="submit">Search</button>
-                    </fieldset>
-                  </StyledForm>
+                  <FeedSearch />
                 </>
               )}
               {!me && <p>loading...</p>}

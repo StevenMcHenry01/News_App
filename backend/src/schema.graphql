@@ -16,7 +16,9 @@ type Mutation {
 type Query {
   users: [User]!
   me: User
-  getArticles(term: String!): [Article]
+  getLeftArticles(term: String!, page: Int!): [Article]
+  getRightArticles(term: String!, page: Int!): [Article]
+  getCenterArticles(term: String!, page: Int!): [Article]
 }
 
 # redefine user so as to not leak password, reset token etc into front end
