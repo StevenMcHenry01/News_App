@@ -18,8 +18,6 @@ const Query = {
     )
   },
   async getLeftArticles(parent, { term, page }, ctx, info) {
-    console.log(leftDomains)
-    console.log(rightDomains)
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${term}&page=${page}&language=en&sortBy=popularity&domains=${leftDomains}&apiKey=a76f13b0fea54c40983c0b2982f032dd`
     )

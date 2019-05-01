@@ -32,6 +32,7 @@ type User {
 }
 
 type Article {
+  id: ID!
   source: String
   author: String
   title: String

@@ -1,5 +1,5 @@
 # source: https://steven-server-3465ee5b08.herokuapp.com/News-Backend/dev
-# timestamp: Wed Apr 17 2019 18:14:28 GMT-0700 (Pacific Daylight Time)
+# timestamp: Wed May 01 2019 13:06:43 GMT-0700 (Pacific Daylight Time)
 
 type AggregateArticle {
   count: Int!
@@ -13,7 +13,8 @@ type AggregateUser {
   count: Int!
 }
 
-type Article {
+type Article implements Node {
+  id: ID!
   source: String
   author: String
   title: String
@@ -47,6 +48,7 @@ input ArticleCreateInput {
 
 input ArticleCreateManyInput {
   create: [ArticleCreateInput!]
+  connect: [ArticleWhereUniqueInput!]
 }
 
 """An edge in a connection."""
@@ -59,6 +61,8 @@ type ArticleEdge {
 }
 
 enum ArticleOrderByInput {
+  id_ASC
+  id_DESC
   source_ASC
   source_DESC
   author_ASC
@@ -75,8 +79,6 @@ enum ArticleOrderByInput {
   publishedAt_DESC
   content_ASC
   content_DESC
-  id_ASC
-  id_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -84,6 +86,7 @@ enum ArticleOrderByInput {
 }
 
 type ArticlePreviousValues {
+  id: ID!
   source: String
   author: String
   title: String
@@ -221,6 +224,17 @@ input ArticlesWhereInput {
   article_none: ArticleWhereInput
 }
 
+input ArticleUpdateInput {
+  source: String
+  author: String
+  title: String
+  description: String
+  url: String
+  urlToImage: String
+  publishedAt: String
+  content: String
+}
+
 input ArticleUpdateManyMutationInput {
   source: String
   author: String
@@ -241,6 +255,46 @@ input ArticleWhereInput {
 
   """Logical NOT on all given filters combined by AND."""
   NOT: [ArticleWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
   source: String
 
   """All values that are not equal to given value."""
@@ -563,6 +617,10 @@ input ArticleWhereInput {
   content_not_ends_with: String
 }
 
+input ArticleWhereUniqueInput {
+  id: ID
+}
+
 type BatchPayload {
   """The number of nodes that have been affected by the Batch operation."""
   count: Long!
@@ -579,8 +637,11 @@ type Mutation {
   createArticles(data: ArticlesCreateInput!): Articles!
   createArticle(data: ArticleCreateInput!): Article!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateArticle(data: ArticleUpdateInput!, where: ArticleWhereUniqueInput!): Article
   deleteUser(where: UserWhereUniqueInput!): User
+  deleteArticle(where: ArticleWhereUniqueInput!): Article
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertArticle(where: ArticleWhereUniqueInput!, create: ArticleCreateInput!, update: ArticleUpdateInput!): Article!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyArticles(data: ArticleUpdateManyMutationInput!, where: ArticleWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
@@ -626,6 +687,7 @@ type Query {
   articleses(where: ArticlesWhereInput, orderBy: ArticlesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Articles]!
   articles(where: ArticleWhereInput, orderBy: ArticleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Article]!
   user(where: UserWhereUniqueInput!): User
+  article(where: ArticleWhereUniqueInput!): Article
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   articlesesConnection(where: ArticlesWhereInput, orderBy: ArticlesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ArticlesConnection!
   articlesConnection(where: ArticleWhereInput, orderBy: ArticleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ArticleConnection!
