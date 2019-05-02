@@ -3,7 +3,10 @@ import styled from 'styled-components'
 const FeedStyles = styled.div`
   margin: 0 auto;
   text-align: center;
-  max-width: 400px;
+  max-width: ${props => props.theme.maxWidth};
 `
 
-export default FeedStyles
+const ColumnStyles = styled.div`
+  border: 1px solid black;
+`
+export { FeedStyles, ColumnStyles }
