@@ -10,7 +10,7 @@ type Mutation {
   signout: SuccessMessage
   requestReset(email: String!): SuccessMessage
   resetPassword(resetToken: String!, password: String!, confirmPassword: String!): User!
-  changeAffiliation(lib: Int!, cons: Int!): User!
+  changeAffiliation(lib: Int!, cons: Int!, email: String!): User!
 }
 
 type Query {
